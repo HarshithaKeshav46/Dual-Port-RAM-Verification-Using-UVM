@@ -85,3 +85,138 @@ dual-port-ram-uvm/
 ├── testbench.sv
 ├── architecture.png
 └── README.md
+
+🔍 UVM Components
+Transaction
+
+ram_trans extends uvm_sequence_item and represents the RAM transaction containing address and data information.
+
+Sequences
+
+Separate sequences are implemented for read and write operations.
+
+ram_wseqs – Generates write transactions.
+ram_rseqs – Generates read transactions.
+Sequencers
+
+Separate sequencers provide transactions from the corresponding sequences to the drivers.
+
+wseqr – Write sequencer.
+rseqr – Read sequencer.
+Drivers
+
+The drivers convert sequence transactions into DUT-level signal activity through the virtual interface.
+
+wdrv – Drives write enable, address, and write data.
+rdrv – Drives read enable and read address.
+Monitors
+
+The monitors observe DUT activity and collect transactions through the interface.
+
+wmon – Monitors write transactions.
+rmon – Monitors read transactions and captures read data.
+Agents
+
+Two independent UVM agents are used:
+
+wagent – Write agent.
+ragent – Read agent.
+
+Each active agent contains its corresponding sequencer, driver, and monitor.
+
+Configuration
+
+my_config stores the virtual interface and active/passive configuration used by the UVM components.
+
+Scoreboard
+
+The scoreboard maintains a reference memory model to store expected RAM contents.
+
+For a write transaction:
+
+Expected Memory[write_addr] = write_data
+
+For a read transaction, the scoreboard compares:
+
+Expected Data ↔ Actual Read Data
+
+A successful comparison generates:
+
+[SB] DATA MATCHED SUCCESSFULLY
+Environment
+
+ram_env instantiates and connects the read agent, write agent, and scoreboard.
+
+Test
+
+ram_test creates the configuration, environment, and read/write sequences and starts the sequences on their respective sequencers.
+
+🧪 Test Scenario
+
+The current test performs a basic write-read verification.
+
+Write Operation
+Write Address = 5
+Write Data    = 100
+Read Operation
+Read Address = 5
+
+The scoreboard verifies that the data read from address 5 matches the previously written value.
+
+✅ Simulation Result
+
+The design was simulated using Synopsys VCS with UVM.
+
+The scoreboard successfully reported:
+
+[SB] DATA MATCHED SUCCESSFULLY
+UVM Report Summary
+UVM_INFO    : 4
+UVM_WARNING : 0
+UVM_ERROR   : 0
+UVM_FATAL   : 0
+
+The simulation completed successfully at 15 ns.
+
+🛠️ Tools & Technologies
+SystemVerilog
+UVM
+Synopsys VCS
+EDA Playground
+Git
+GitHub
+
+📚 UVM Concepts Demonstrated
+uvm_test
+uvm_env
+uvm_agent
+uvm_driver
+uvm_monitor
+uvm_sequencer
+uvm_sequence
+uvm_sequence_item
+uvm_scoreboard
+uvm_analysis_port
+uvm_tlm_analysis_fifo
+uvm_config_db
+Virtual interfaces
+Clocking blocks
+Modports
+UVM factory
+UVM phases
+Objection mechanism
+TLM communication
+
+📈 Verification Flow
+The UVM test creates the verification environment.
+Read and write sequences generate transactions.
+Sequencers provide transactions to their respective drivers.
+Drivers drive the transactions to the DUT through the virtual interface.
+Monitors observe the DUT activity.
+Write transactions update the reference memory in the scoreboard.
+Read transactions are compared against the expected memory contents.
+The scoreboard reports PASS/FAIL results.
+
+🎓 Key Learning
+
+This project demonstrates the development of a class-based UVM verification environment for a dual-port RAM, including independent read/write stimulus generation, transaction-level communication, virtual interface usage, monitoring, reference modeling, and automated scoreboard-based checking.
