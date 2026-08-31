@@ -79,39 +79,43 @@ dual-port-ram-uvm/
 │   └── ram_test.sv
 │
 ├── testbench.sv
-├── architecture.png
+├── Architecture.png
 └── README.md
 
 🔍 UVM Components
-Transaction
+●Transaction
 
 ram_trans extends uvm_sequence_item and represents the RAM transaction containing address and data information.
 
-Sequences
+●Sequences
 
 Separate sequences are implemented for read and write operations.
 
 ram_wseqs – Generates write transactions.
 ram_rseqs – Generates read transactions.
-Sequencers
+
+●Sequencers
 
 Separate sequencers provide transactions from the corresponding sequences to the drivers.
 
 wseqr – Write sequencer.
 rseqr – Read sequencer.
-Drivers
+
+●Drivers
 
 The drivers convert sequence transactions into DUT-level signal activity through the virtual interface.
 
 wdrv – Drives write enable, address, and write data.
 rdrv – Drives read enable and read address.
-Monitors
+
+●Monitors
 
 The monitors observe DUT activity and collect transactions through the interface.
 
 wmon – Monitors write transactions.
 rmon – Monitors read transactions and captures read data.
-Agents
+
+●Agents
 
 Two independent UVM agents are used:
 
@@ -120,11 +124,11 @@ ragent – Read agent.
 
 Each active agent contains its corresponding sequencer, driver, and monitor.
 
-Configuration
+●Configuration
 
 my_config stores the virtual interface and active/passive configuration used by the UVM components.
 
-Scoreboard
+●Scoreboard
 
 The scoreboard maintains a reference memory model to store expected RAM contents.
 
@@ -139,11 +143,12 @@ Expected Data ↔ Actual Read Data
 A successful comparison generates:
 
 [SB] DATA MATCHED SUCCESSFULLY
-Environment
+
+●Environment
 
 ram_env instantiates and connects the read agent, write agent, and scoreboard.
 
-Test
+●Test
 
 ram_test creates the configuration, environment, and read/write sequences and starts the sequences on their respective sequencers.
 
