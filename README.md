@@ -165,6 +165,7 @@ Read Address = 5
 The scoreboard verifies that the data read from address 5 matches the previously written value.
 
 ✅ Simulation Result
+![Simulation Result](Result.png)
 
 The design was simulated using Synopsys VCS with UVM.
 
