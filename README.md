@@ -52,10 +52,6 @@ The verification environment consists of:
 - UVM Environment
 - UVM Test
 
-The architecture diagram is provided below.
-
-![UVM Architecture](architecture.png)
-
 ## 📂 Project Structure
 
 ```text
