@@ -37,6 +37,8 @@ The Design Under Test (DUT) is a **Dual-Port RAM** with independent read and wri
 
 ## 🏗️ Verification Architecture
 
+![Verification Architecture](./Architecture.png)
+
 The verification environment consists of:
 
 - Write Agent
@@ -84,54 +86,34 @@ dual-port-ram-uvm/
 ```
 
 🔍 UVM Components
-●Transaction
 
-ram_trans extends uvm_sequence_item and represents the RAM transaction containing address and data information.
+●Transaction - ram_trans extends uvm_sequence_item and represents the RAM transaction containing address and data information.
 
-●Sequences
-
-Separate sequences are implemented for read and write operations.
-
+●Sequences - Separate sequences are implemented for read and write operations.
 ram_wseqs – Generates write transactions.
 ram_rseqs – Generates read transactions.
 
-●Sequencers
-
-Separate sequencers provide transactions from the corresponding sequences to the drivers.
-
+●Sequencers - Separate sequencers provide transactions from the corresponding sequences to the drivers.
 wseqr – Write sequencer.
 rseqr – Read sequencer.
 
-●Drivers
-
-The drivers convert sequence transactions into DUT-level signal activity through the virtual interface.
-
+●Drivers - The drivers convert sequence transactions into DUT-level signal activity through the virtual interface.
 wdrv – Drives write enable, address, and write data.
 rdrv – Drives read enable and read address.
 
-●Monitors
-
-The monitors observe DUT activity and collect transactions through the interface.
-
+●Monitors - The monitors observe DUT activity and collect transactions through the interface.
 wmon – Monitors write transactions.
 rmon – Monitors read transactions and captures read data.
 
 ●Agents
-
 Two independent UVM agents are used:
-
 wagent – Write agent.
 ragent – Read agent.
-
 Each active agent contains its corresponding sequencer, driver, and monitor.
 
-●Configuration
+●Configuration - my_config stores the virtual interface and active/passive configuration used by the UVM components.
 
-my_config stores the virtual interface and active/passive configuration used by the UVM components.
-
-●Scoreboard
-
-The scoreboard maintains a reference memory model to store expected RAM contents.
+●Scoreboard - The scoreboard maintains a reference memory model to store expected RAM contents.
 
 For a write transaction:
 
@@ -145,13 +127,9 @@ A successful comparison generates:
 
 [SB] DATA MATCHED SUCCESSFULLY
 
-●Environment
+●Environment - ram_env instantiates and connects the read agent, write agent, and scoreboard.
 
-ram_env instantiates and connects the read agent, write agent, and scoreboard.
-
-●Test
-
-ram_test creates the configuration, environment, and read/write sequences and starts the sequences on their respective sequencers.
+●Test - ram_test creates the configuration, environment, and read/write sequences and starts the sequences on their respective sequencers.
 
 🧪 Test Scenario
 
@@ -190,35 +168,62 @@ Git
 GitHub
 
 📚 UVM Concepts Demonstrated
-uvm_test
-uvm_env
-uvm_agent
-uvm_driver
-uvm_monitor
-uvm_sequencer
-uvm_sequence
-uvm_sequence_item
-uvm_scoreboard
-uvm_analysis_port
-uvm_tlm_analysis_fifo
-uvm_config_db
-Virtual interfaces
-Clocking blocks
-Modports
-UVM factory
-UVM phases
-Objection mechanism
-TLM communication
+
+-uvm_test
+
+-uvm_env
+
+-uvm_agent
+
+-uvm_driver
+
+-uvm_monitor
+
+-uvm_sequencer
+
+-uvm_sequence
+
+-uvm_sequence_item
+
+-uvm_scoreboard
+
+-uvm_analysis_port
+
+-uvm_tlm_analysis_fifo
+
+-uvm_config_db
+
+-Virtual interfaces
+
+-Clocking blocks
+
+-Modports
+
+-UVM factory
+
+-UVM phases
+
+-Objection mechanism
+
+-TLM communication
 
 📈 Verification Flow
-The UVM test creates the verification environment.
-Read and write sequences generate transactions.
-Sequencers provide transactions to their respective drivers.
-Drivers drive the transactions to the DUT through the virtual interface.
-Monitors observe the DUT activity.
-Write transactions update the reference memory in the scoreboard.
-Read transactions are compared against the expected memory contents.
-The scoreboard reports PASS/FAIL results.
+
+-The UVM test creates the verification environment.
+
+-Read and write sequences generate transactions.
+
+-Sequencers provide transactions to their respective drivers.
+
+-Drivers drive the transactions to the DUT through the virtual interface.
+
+-Monitors observe the DUT activity.
+
+-Write transactions update the reference memory in the scoreboard.
+
+-Read transactions are compared against the expected memory contents.
+
+-The scoreboard reports PASS/FAIL results.
 
 🎓 Key Learning
 
