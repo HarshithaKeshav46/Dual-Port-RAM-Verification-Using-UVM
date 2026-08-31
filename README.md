@@ -81,6 +81,7 @@ dual-port-ram-uvm/
 ├── testbench.sv
 ├── Architecture.png
 └── README.md
+```
 
 🔍 UVM Components
 ●Transaction
